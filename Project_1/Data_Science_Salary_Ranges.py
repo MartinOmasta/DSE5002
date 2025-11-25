@@ -5,7 +5,8 @@ Created on Sat Nov 15 14:31:19 2025
 @author: Marty
 """
 
-#import key packages & libraries
+
+#Section 1: import key packages & libraries
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -13,14 +14,19 @@ import matplotlib.pyplot as plt
 from scipy.stats import shapiro, t
 import types
 from matplotlib.table import Table
+#END 1#########################################################################
 
-#read .csv of salary ranges
+
+
+#Section 2: read .csv of salary ranges
 infile = "MartinOmasta.module05RProject.csv"
 salary_ranges_df = pd.read_csv(infile)
 #print(salary_ranges_df.head())
+#END 2#########################################################################
 
 
-#Thoughts on A, B, & C - 17 Nov 25. Code Starts around Line 80
+
+#Section 3:Thoughts on Summary & Analysis for Prof Lowhorn. Code Starts around Line 80
 """ 
 The thing that stands out most to me is the type of employment that these data
 scientists seem to prefer - 588 of the 607 are Full-Time employees - suggesting
@@ -68,12 +74,11 @@ country.
 
  
 """
-###########################
+#END 3#########################################################################
 
 
 
-
-#convert relevant columns to Categorical
+#Section 4: convert relevant columns to Categorical
 salary_ranges_df['work_year'] = pd.Categorical(salary_ranges_df.work_year)
 
 salary_ranges_df['experience_level'] = pd.Categorical(salary_ranges_df.experience_level)
@@ -90,9 +95,11 @@ salary_ranges_df['remote_ratio'] = pd.Categorical(salary_ranges_df.remote_ratio)
 #salary_ranges_df['company_location'] = pd.Categorical(salary_ranges_df.company_location)
 salary_ranges_df['company_size'] = pd.Categorical(salary_ranges_df.company_size)
 #print(salary_ranges_df.dtypes)
+#END 4#########################################################################
 
 
 
+#Section 5: Data Summaries & Analysis
 #A) inspect some key salary statistics including mean, std, and the quartiles
 print("--- 1. Salary Statistics (.describe()) ---")
 salary_columns = ['salary', 'salary_in_usd']
@@ -131,15 +138,11 @@ def df_value_counts(user_df, num_cols_to_display):
 print("\n")
 print("--- 4. Alternative Summary: Top Value Counts ---")
 df_value_counts(salary_ranges_df, 17)
+#END 5#########################################################################
 
 
 
-
-
-
-
-
-#Boxplot of what the salary ranges are by experience level
+#Section 6: Boxplot of what the salary ranges are by experience level
 plt.figure(figsize=(10, 8))
 new_experience_labels = ['Entry', 'Intermediate', 'Senior', 'Executive']
 
@@ -160,10 +163,11 @@ boxplot_salary_range_by_experience.set_xticklabels(new_experience_labels)
 
 plt.tight_layout()
 plt.show()
-###########################
+#END 6#########################################################################
 
 
-#Violin plot of what the salary ranges are by experience level
+
+#Section 7: Violin plot of what the salary ranges are by experience level
 plt.figure(figsize=(10, 8))
 
 violinplot_salary_range_by_experience = sns.violinplot(salary_ranges_df, 
@@ -183,10 +187,11 @@ violinplot_salary_range_by_experience.set_xticklabels(new_experience_labels)
 
 plt.tight_layout()
 plt.show()
-###########################
+#END 7#########################################################################
 
 
-#View the numerical information of the salary_range_by_experience boxplot
+
+#Section 8: View the numerical information of the salary_range_by_experience boxplot
 quantiles = [0.25, 0.5, 0.75]
 
 usd_salary_quartile_data = salary_ranges_df.groupby('experience_level',
@@ -243,10 +248,11 @@ plt.title('Salary Quartile Values by Experience Level', fontsize=14, pad=0)
 
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
-#############################
+#END 8#########################################################################
 
 
-#Boxplot to examine effect of U.S. Residency on salary ranges
+
+#Section 9: Boxplot to examine effect of U.S. Residency on salary ranges
 #Create a new column to categorize residence as 'US' or 'Non-US'
 salary_ranges_df['residence_group'] = np.where(
     salary_ranges_df['employee_residence'] == 'US',
@@ -301,10 +307,11 @@ boxplot_salary_by_exp_and_residency.legend(handles, new_experience_labels,
 
 plt.tight_layout()
 plt.show()
-#############################
+#END 9#########################################################################
 
 
-#Violin plot to examine effect of U.S. Residency on salary ranges
+
+#Sectoin 10: Violin plot to examine effect of U.S. Residency on salary ranges
 #Violin plot with US & Non-US side by side
 plt.figure(figsize=(12, 8))
 
@@ -326,11 +333,14 @@ violinplot_salary_by_exp_and_residency.legend(handles, new_experience_labels,
 
 plt.tight_layout()
 plt.show()
-#############################
+#END 10#########################################################################
 
 
-#View the numerical information of the effect of U.S. Residency on salary 
-#ranges salary_by_exp_and_residency boxplot
+
+#Section 11: View the numerical information of the effect of U.S. Residency on salary 
+#ranges salary_by_exp_and_residency boxplot. ***Not ending up the primary one
+#because the bold styling of the line is too wonky with single verticle column
+#being bolded
 quantiles = [0.25, 0.5, 0.75]
 
 usd_salary_residence_quartile_data = salary_ranges_df.groupby(['residence_group', 'experience_level'],
@@ -347,11 +357,13 @@ label_map = dict(zip(original_abbreviations, new_experience_labels))
 usd_salary_residence_quartile_table = usd_salary_residence_quartile_table.rename(index = label_map)
 
 print("\n")
-print("--- Salary Quartile Values by Experience Level and US/Non-US---")
+print("--- Salary Quartile Values by Experience Level and US/Non-US ---")
 print(usd_salary_residence_quartile_table)
+#END 11#########################################################################
 
 
-# Convert the DataFrame index (Experience Level) and columns to lists for the table visualization
+
+#Section 12: Convert the DataFrame index (Experience Level) and columns to lists for the table visualization
 data_values_residency = usd_salary_residence_quartile_table.values.round(0).astype(int) # Round and convert to integer ndarray
 data_values_residency = [[f'${x:,.0f}' for x in row] 
                      for row in usd_salary_residence_quartile_table.values]#convert to list of currency formatted strings
@@ -388,11 +400,9 @@ plt.title('Salary Quartile Values by Residency & Experience Level', fontsize=14,
 
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
-#############################
 
 
-#1######################################################################################
-
+#Establish the line on which the bolding should occur
 NUM_ROWS = len(usd_salary_residence_quartile_table) # Should be 8 (4 Non-US, 4 US)
 NON_US_ROWS = NUM_ROWS // 2 # Should be 4
 US_ROWS = NUM_ROWS // 2 # Should be 4
@@ -461,17 +471,19 @@ for i in range(NUM_ROWS + 1): # Include header row
              
 # Merge (Span) the Residency cells:
 # Merge Non-US cells (Rows 1 to 4)
-"""
-table_residency.get_celld()[(1, 0)].set_rowspan(NON_US_ROWS) 
-for i in range(2, NON_US_ROWS + 1):
-    table_residency.get_celld()[(i, 0)].set_visible(False)
 
-# Merge US cells (Rows 5 to 8)
-table_residency.get_celld()[(NON_US_ROWS + 1, 0)].set_rowspan(US_ROWS)
-for i in range(NON_US_ROWS + 2, NUM_ROWS + 1):
-    table_residency.get_celld()[(i, 0)].set_visible(False)
-#this caused an error, so commented out
-    """
+# =============================================================================
+# table_residency.get_celld()[(1, 0)].set_rowspan(NON_US_ROWS) 
+# for i in range(2, NON_US_ROWS + 1):
+#     table_residency.get_celld()[(i, 0)].set_visible(False)
+# 
+# # Merge US cells (Rows 5 to 8)
+# table_residency.get_celld()[(NON_US_ROWS + 1, 0)].set_rowspan(US_ROWS)
+# for i in range(NON_US_ROWS + 2, NUM_ROWS + 1):
+#     table_residency.get_celld()[(i, 0)].set_visible(False)
+# =============================================================================
+#this caused an error, so commented out. Leaving for future reference
+    
 
 # Style and Title
 table_residency.auto_set_font_size(False)
@@ -482,12 +494,11 @@ plt.title('Salary Quartile Values by Residency & Experience Level', fontsize=14,
 
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
-
-#END 1######################################################################################
-
+#END 12#########################################################################
 
 
-#2######################################################################################
+
+#Section 13: Same data as Section 11, differnt styling attempt
 
 NUM_ROWS = len(usd_salary_residence_quartile_table) # Should be 8 (4 Non-US, 4 US)
 NON_US_ROWS = NUM_ROWS // 2 # Should be 4
@@ -623,10 +634,12 @@ plt.title('Salary Quartile Values by Residency & Experience Level', fontsize=14,
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
 
-#END 2######################################################################################
+#END 13#########################################################################
 
 
-#3######################################################################################
+
+#Section 14: Same data as Section 11: Final Presentation Usable look, modified
+#spanning of rows in the Residency column for clean aesthetic
 
 NUM_ROWS = len(usd_salary_residence_quartile_table) # Should be 8 (4 Non-US, 4 US)
 NON_US_ROWS = NUM_ROWS // 2 # Should be 4
@@ -752,8 +765,7 @@ plt.title('Salary Quartile Values by Residency & Experience Level',
 
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
-
-#END 3######################################################################################
+#END 14#######################################################################
 
 
 """
@@ -786,6 +798,8 @@ plt.show()
 """
 
 
+
+#Section 15: Determine how common it is that a DS works in their home country
 # Create a Boolean column: True where they match, False where they don't
 salary_ranges_df['works_in_home_country'] = (
     salary_ranges_df['employee_residence'] == salary_ranges_df['company_location']
@@ -796,7 +810,7 @@ print("\n--- Total Match vs. Mismatch Counts ---")
 print(salary_ranges_df['works_in_home_country'].value_counts())
 print("\n--- Percentage of Match vs. Mismatch ---")
 print(salary_ranges_df['works_in_home_country'].value_counts(normalize = True).mul(100).round(2).astype(str) + '%')
-#############################
+#END 15#######################################################################
 
 
 """
@@ -822,7 +836,7 @@ pd.set_option('display.max_rows', 60)
 """
 
 
-#Histogram of salary_in_usd
+#Section 16: Histogram of salary_in_usd
 plt.figure(figsize=(10, 6))
 sns.histplot(salary_ranges_df.salary_in_usd, kde = True, bins = 30)
 plt.title('Distribution of Salaries in USD')
@@ -836,10 +850,11 @@ stat, p_value = shapiro(salary_ranges_df.salary_in_usd)
 print(f"\nShapiro-Wilk Statistic: {stat:.3f}")
 print(f"P-value: {p_value:.5f}") 
 #essentially 0 p-value - reject null hypotheis (not normal/gaussian distribution)
-#############################
+#END 16#######################################################################
 
 
-#Confidence interval for all salaries with a T-Distribution
+
+#Section 17: Confidence interval for all salaries with a T-Distribution
 confidence_level = 0.95 # For a 95% confidence interval
 data = salary_ranges_df.salary_in_usd.values # Use the numpy array data
 
@@ -861,10 +876,11 @@ print(f"\n--- 95% Confidence Interval for Mean Salary ---")
 print(f"Sample Mean: ${mean_salary:,.2f}")
 print(f"Margin of Error (ME): ${margin_of_error:,.2f}")
 print(f"Confidence Interval (CI): (${lower_bound:,.2f}, ${upper_bound:,.2f})")
-#############################
+#END 17#######################################################################
 
 
-#Confidence interval for salaries based on experience_level
+
+#Section 18: Confidence interval for salaries based on experience_level
 def calculate_confidence_interval(series, confidence_level=0.95):
     """
     Calculates the mean, standard error, margin of error, and 
@@ -913,10 +929,12 @@ print("\n--- 95% Confidence Intervals by Experience Level ---")
 formatted_results = ci_results_df.map(lambda x: f"${x:,.2f}")
 print(formatted_results)
 #print(ci_results_df)
-#############################
+#END 18#######################################################################
 
 
-#5 Convert the IPython Output for the Confidence Interval to a matplotlib plot
+
+
+#Section 19: Convert the IPython Output for the Confidence Interval to a matplotlib plot
 
 # --- 1. Robust Data Preparation for Plotting using Unstacking ---
 
@@ -1030,9 +1048,25 @@ ax.legend(loc='lower right', frameon=False, fontsize=10)
 
 plt.tight_layout()
 plt.show()
-
-#END 5########################################################################
-
+#END 19########################################################################
 
 
 
+#Section 20: Calculate percentage discount Non-US DS salary is for each experience level
+#usd_salary_residence_quartile_data #variable to work with
+
+print("\n")
+print(type(usd_salary_residence_quartile_data.index))
+
+print("BIG FART")
+print(usd_salary_residence_quartile_data.index.levels)
+print(usd_salary_residence_quartile_data.index.names)
+
+print("FART")
+for salary_index_tuple in usd_salary_residence_quartile_data.index:
+    print(salary_index_tuple)
+#[['Non-US', 'US'], ['EN', 'MI', 'SE', 'EX'], [0.25, 0.5, 0.75]]
+
+print(usd_salary_residence_quartile_data['US']['SE'][0.5])
+
+#END 20########################################################################
