@@ -1134,45 +1134,47 @@ print(non_us_percentage_savings_table.unstack())
 
 
 
-#Section 22: Convert the DataFrame index (Experience Level) and columns to lists 
-# for the table visualization
-data_values_world = non_us_percentage_savings_table.values
-#data_values_world = [[f'${x:,.0f}' for x in row] 
-#                     for row in non_us_percentage_savings_table.values]#convert to list of currency formatted strings
-
-
-row_labels_world = non_us_percentage_savings_table.index.tolist()
-#col_labels_world = non_us_percentage_savings_table.columns.tolist()
-
-# --- Create the Matplotlib Figure and Table ---
-plt.figure(figsize = (8, 3)) # Adjust size for the table
-ax_world = plt.gca() # Get the current axes object
-
-# 1. Hide the axes (the plot area itself) so only the table is visible
-ax_world.axis('off') 
-ax_world.axis('tight')
-
-# 2. Draw the table onto the axes
-# 'cellText' is the data. 'rowLabels' and 'colLabels' define the headers.
-table_world = ax_world.table(
-    cellText = data_values_world,
-    rowLabels = row_labels_world,
-#    colLabels = col_labels_world,
-    loc = 'center',
-    cellLoc = 'center', # Center the text within cells
-    rowLoc = 'center'
-)
-
-#Style and Title
-table_world.auto_set_font_size(False)
-table_world.set_fontsize(12)
-table_world.scale(0.8, 1.5) # Scale width and height of cells
-
-plt.title('Percentage Savings by Hiring Non-US Data Scientists', fontsize=14, pad=0)
-
-# Display the figure (sends it to the Plots pane in Spyder)
-plt.show()
-#END 22########################################################################
+# =============================================================================
+# #Section 22: Convert the DataFrame index (Experience Level) and columns to lists 
+# # for the table visualization
+# data_values_world = non_us_percentage_savings_table.values
+# #data_values_world = [[f'${x:,.0f}' for x in row] 
+# #                     for row in non_us_percentage_savings_table.values]#convert to list of currency formatted strings
+# 
+# 
+# row_labels_world = non_us_percentage_savings_table.index.tolist()
+# #col_labels_world = non_us_percentage_savings_table.columns.tolist()
+# 
+# # --- Create the Matplotlib Figure and Table ---
+# plt.figure(figsize = (8, 3)) # Adjust size for the table
+# ax_world = plt.gca() # Get the current axes object
+# 
+# # 1. Hide the axes (the plot area itself) so only the table is visible
+# ax_world.axis('off') 
+# ax_world.axis('tight')
+# 
+# # 2. Draw the table onto the axes
+# # 'cellText' is the data. 'rowLabels' and 'colLabels' define the headers.
+# table_world = ax_world.table(
+#     cellText = data_values_world,
+#     rowLabels = row_labels_world,
+# #    colLabels = col_labels_world,
+#     loc = 'center',
+#     cellLoc = 'center', # Center the text within cells
+#     rowLoc = 'center'
+# )
+# 
+# #Style and Title
+# table_world.auto_set_font_size(False)
+# table_world.set_fontsize(12)
+# table_world.scale(0.8, 1.5) # Scale width and height of cells
+# 
+# plt.title('Percentage Savings by Hiring Non-US Data Scientists', fontsize=14, pad=0)
+# 
+# # Display the figure (sends it to the Plots pane in Spyder)
+# plt.show()
+# #END 22########################################################################
+# =============================================================================
 
 
 
