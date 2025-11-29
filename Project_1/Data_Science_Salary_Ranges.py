@@ -2,7 +2,7 @@
 """
 Created on Sat Nov 15 14:31:19 2025
 
-@author: Marty
+@author: Martin Omasta
 """
 
 
@@ -12,8 +12,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import shapiro, t
-import types
-from matplotlib.table import Table
+#import types
+#from matplotlib.table import Table
 #END 1#########################################################################
 
 
@@ -26,7 +26,7 @@ salary_ranges_df = pd.read_csv(infile)
 
 
 
-#Section 3:Thoughts on Summary & Analysis for Prof Lowhorn. Code Starts around Line 80
+#Section 3:Thoughts on Summary & Analysis for Prof Lowhorn. Code Starts around Line 85
 """ 
 The thing that stands out most to me is the type of employment that these data
 scientists seem to prefer - 588 of the 607 are Full-Time employees - suggesting
@@ -73,6 +73,14 @@ the benefits of in person interaction have been laid bare in recent years.
 country. 
 
  
+Works Cited:
+1) Google, Virtual Assistant (VA). Prompt used to generate response (Various prompts 
+"Explain and build Pythonic code to for data examination structures (charts, grahps, etc)"). Retrieved 15-28 Nov. 2025.
+VAMMA (Virtual Assistant with Manual Modification and Arrangement, Gemini, Google) 
+
+2) Seaborn boxplot. (2012-2024). API explanation. Retrieved 16 Nov. 2025. 
+https://seaborn.pydata.org/generated/seaborn.boxplot.html
+
 """
 #END 3#########################################################################
 
@@ -99,8 +107,8 @@ salary_ranges_df['company_size'] = pd.Categorical(salary_ranges_df.company_size)
 
 
 
-#Section 5: Data Summaries & Analysis
-#A) inspect some key salary statistics including mean, std, and the quartiles
+#Section 5: Data Summaries & Analysis (VA & Manually Modified Arranged) VAMMA (Virtual Assistant with Manual Modification and Arrangement, Gemini)
+#A) inspect some key salary statistics including mean, std, and the quartiles (VAMMA))
 print("--- 1. Salary Statistics (.describe()) ---")
 salary_columns = ['salary', 'salary_in_usd']
 print(salary_ranges_df[salary_columns].describe().
@@ -142,7 +150,7 @@ df_value_counts(salary_ranges_df, 17)
 
 
 
-#Section 6: Boxplot of what the salary ranges are by experience level
+#Section 6: Boxplot of what the salary ranges are by experience level (VAMMA)
 plt.figure(figsize=(10, 8))
 new_experience_labels = ['Entry', 'Intermediate', 'Senior', 'Executive']
 
@@ -167,7 +175,7 @@ plt.show()
 
 
 
-#Section 7: Violin plot of what the salary ranges are by experience level
+#Section 7: Violin plot of what the salary ranges are by experience level (just switched up Sec 6)
 plt.figure(figsize=(10, 8))
 
 violinplot_salary_range_by_experience = sns.violinplot(salary_ranges_df, 
@@ -191,7 +199,7 @@ plt.show()
 
 
 
-#Section 8: View the numerical information of the salary_range_by_experience boxplot
+#Section 8: View the numerical information of the salary_range_by_experience boxplot (VAMMA)
 quantiles = [0.25, 0.5, 0.75]
 
 usd_salary_quartile_data = salary_ranges_df.groupby('experience_level',
@@ -213,7 +221,7 @@ print(usd_salary_quartile_table)
 
 
 
-#Section 9: Convert the DataFrame index (Experience Level) and columns to lists for the table visualization
+#Section 9: Convert the DataFrame index (Experience Level) and columns to lists for the table visualization (VAMMA)
 data_values_world = usd_salary_quartile_table.values.round(0).astype(int) # Round and convert to integer ndarray
 data_values_world = [[f'${x:,.0f}' for x in row] 
                      for row in usd_salary_quartile_table.values]#convert to list of currency formatted strings
@@ -255,7 +263,7 @@ plt.show()
 
 
 #Section 10: Boxplot to examine effect of U.S. Residency on salary ranges
-#Create a new column to categorize residence as 'US' or 'Non-US'
+#Create a new column to categorize residence as 'US' or 'Non-US' (VAMMA)
 salary_ranges_df['residence_group'] = np.where(
     salary_ranges_df['employee_residence'] == 'US',
     'US',
@@ -313,8 +321,8 @@ plt.show()
 
 
 
-#Sectoin 11: Violin plot to examine effect of U.S. Residency on salary ranges
-#Violin plot with US & Non-US side by side
+#Section 11: Violin plot to examine effect of U.S. Residency on salary ranges
+#Violin plot with US & Non-US side by side (just switched up Sec 10)
 plt.figure(figsize=(12, 8))
 
 # Use Residence_Group for the primary axis (x) and experience_level for color (hue)
@@ -340,9 +348,7 @@ plt.show()
 
 
 #Section 12: View the numerical information of the effect of U.S. Residency on salary 
-#ranges salary_by_exp_and_residency boxplot. ***Not ending up the primary one
-#because the bold styling of the line is too wonky with single verticle column
-#being bolded
+#ranges salary_by_exp_and_residency boxplot. (just switched up Sec 8)
 quantiles = [0.25, 0.5, 0.75]
 
 usd_salary_residence_quartile_data = salary_ranges_df.groupby(['residence_group', 'experience_level'],
@@ -365,7 +371,9 @@ print(usd_salary_residence_quartile_table)
 
 
 
-#Section 13: Convert the DataFrame index (Experience Level) and columns to lists for the table visualization
+#Section 13: Convert the DataFrame index (Experience Level) and columns to lists for the table visualization (VAMMA (lots of VA!))
+# ***Not ending up the primary one because the bold styling of the line is too wonky
+# with single vertical columns on just one row (6th) being bolded
 data_values_residency = usd_salary_residence_quartile_table.values.round(0).astype(int) # Round and convert to integer ndarray
 data_values_residency = [[f'${x:,.0f}' for x in row] 
                      for row in usd_salary_residence_quartile_table.values]#convert to list of currency formatted strings
@@ -496,11 +504,12 @@ plt.title('Salary Quartile Values by Residency & Experience Level', fontsize=14,
 
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
-#END 13#########################################################################
+#END 13####BAD BOLD##########################################################
 
 
 
 #Section 14: Same data as Section 11, differnt styling attempt
+#BAD Bolding, but does do cell spanning and line removal  (VAMMA)
 
 NUM_ROWS = len(usd_salary_residence_quartile_table) # Should be 8 (4 Non-US, 4 US)
 NON_US_ROWS = NUM_ROWS // 2 # Should be 4
@@ -636,12 +645,12 @@ plt.title('Salary Quartile Values by Residency & Experience Level', fontsize=14,
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
 
-#END 14#########################################################################
+#END 14###BAD BOLD, GOOD CELL SPAN##############################################
 
 
 
 #Section 15: Same data as Section 11: Final Presentation Usable look, modified
-#spanning of rows in the Residency column for clean aesthetic
+#spanning of rows in the Residency column for clean aesthetic (VAMMA)
 
 NUM_ROWS = len(usd_salary_residence_quartile_table) # Should be 8 (4 Non-US, 4 US)
 NON_US_ROWS = NUM_ROWS // 2 # Should be 4
@@ -763,7 +772,7 @@ table_residency.set_fontsize(12)
 table_residency.scale(0.8, 1.5) # Scale to make room for merged cells
 
 plt.title('Salary Quartile Values by Residency & Experience Level', 
-          fontsize = 16, y = 0.8)
+          fontsize = 16, y = 0.8) #y is the height the title is above the graph
 
 # Display the figure (sends it to the Plots pane in Spyder)
 plt.show()
